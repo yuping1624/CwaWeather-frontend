@@ -122,6 +122,21 @@
                 inset 0 2px 0 rgba(255, 255, 255, 0.7);
             position: relative;
             text-shadow: 0.5px 0.5px 1px rgba(255, 255, 255, 0.6);
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            user-select: none;
+        }
+
+        .location-pill:hover {
+            transform: rotate(-1.5deg) scale(1.05);
+            box-shadow: 
+                4px 4px 0 rgba(139, 122, 107, 0.5),
+                0 0 0 1px rgba(255, 255, 255, 0.6),
+                inset 0 2px 0 rgba(255, 255, 255, 0.7);
+        }
+
+        .location-pill:active {
+            transform: rotate(-1.5deg) scale(0.98);
         }
 
         .location-pill::before {
@@ -134,6 +149,76 @@
             height: 8px;
             background: var(--soft-brown);
             border-radius: 50%;
+        }
+
+        /* 地點選擇下拉選單 */
+        .location-selector {
+            position: relative;
+            display: inline-block;
+        }
+
+        .location-dropdown {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 0;
+            background: var(--paper-cream);
+            background-image: 
+                repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(155, 138, 123, 0.03) 1px, rgba(155, 138, 123, 0.03) 2px);
+            border: 3px solid var(--hand-drawn-border);
+            border-radius: 12px 20px 15px 18px / 18px 15px 20px 12px;
+            box-shadow: 
+                0 6px 12px rgba(139, 122, 107, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.7);
+            min-width: 180px;
+            z-index: 200;
+            display: none;
+            backdrop-filter: blur(8px);
+            padding: 8px 0;
+            max-height: 300px;
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--soft-brown) transparent;
+        }
+
+        .location-dropdown::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .location-dropdown::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .location-dropdown::-webkit-scrollbar-thumb {
+            background: var(--soft-brown);
+            border-radius: 3px;
+            opacity: 0.5;
+        }
+
+        .location-dropdown.show {
+            display: block;
+        }
+
+        .location-option {
+            padding: 10px 20px;
+            color: var(--accent-brown);
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s;
+            font-size: 0.95rem;
+            border-bottom: 1px dashed rgba(139, 122, 107, 0.2);
+        }
+
+        .location-option:last-child {
+            border-bottom: none;
+        }
+
+        .location-option:hover {
+            background: rgba(255, 255, 255, 0.6);
+        }
+
+        .location-option.active {
+            background: var(--soft-blue);
+            color: var(--accent-brown);
         }
 
         /* 和紙貼紙樣式的日期標籤 - 增強可見度 */
@@ -537,7 +622,35 @@
         </div>
     </div>
     <div class="status-bar">
-        <div class="location-pill">📍 新北</div>
+        <div class="location-selector">
+            <div class="location-pill" id="locationPill">📍 新北市</div>
+            <div class="location-dropdown" id="locationDropdown">
+                <!-- 直轄市 -->
+                <div class="location-option active" data-location="taipei" data-name="臺北市">📍 臺北市</div>
+                <div class="location-option" data-location="newtaipei" data-name="新北市">📍 新北市</div>
+                <div class="location-option" data-location="taoyuan" data-name="桃園市">📍 桃園市</div>
+                <div class="location-option" data-location="taichung" data-name="臺中市">📍 臺中市</div>
+                <div class="location-option" data-location="tainan" data-name="臺南市">📍 臺南市</div>
+                <div class="location-option" data-location="kaohsiung" data-name="高雄市">📍 高雄市</div>
+                <!-- 其他縣市 -->
+                <div class="location-option" data-location="keelung" data-name="基隆市">📍 基隆市</div>
+                <div class="location-option" data-location="hsinchu_city" data-name="新竹市">📍 新竹市</div>
+                <div class="location-option" data-location="hsinchu_county" data-name="新竹縣">📍 新竹縣</div>
+                <div class="location-option" data-location="miaoli" data-name="苗栗縣">📍 苗栗縣</div>
+                <div class="location-option" data-location="changhua" data-name="彰化縣">📍 彰化縣</div>
+                <div class="location-option" data-location="nantou" data-name="南投縣">📍 南投縣</div>
+                <div class="location-option" data-location="yunlin" data-name="雲林縣">📍 雲林縣</div>
+                <div class="location-option" data-location="chiayi_city" data-name="嘉義市">📍 嘉義市</div>
+                <div class="location-option" data-location="chiayi_county" data-name="嘉義縣">📍 嘉義縣</div>
+                <div class="location-option" data-location="pingtung" data-name="屏東縣">📍 屏東縣</div>
+                <div class="location-option" data-location="yilan" data-name="宜蘭縣">📍 宜蘭縣</div>
+                <div class="location-option" data-location="hualien" data-name="花蓮縣">📍 花蓮縣</div>
+                <div class="location-option" data-location="taitung" data-name="臺東縣">📍 臺東縣</div>
+                <div class="location-option" data-location="penghu" data-name="澎湖縣">📍 澎湖縣</div>
+                <div class="location-option" data-location="kinmen" data-name="金門縣">📍 金門縣</div>
+                <div class="location-option" data-location="lienchiang" data-name="連江縣">📍 連江縣</div>
+            </div>
+        </div>
         <div id="updateTime" class="update-pill">更新中...</div>
     </div>
 
@@ -553,7 +666,52 @@
     </div>
 
     <script>
-        const API_URL = "https://weather-new-taipei.zeabur.app/api/weather/newtaipei";
+        // API 基礎 URL
+        const API_BASE_URL = 'https://weather-new-taipei.zeabur.app/api/weather/city';
+
+        // 地點配置 - 所有22個縣市
+        const LOCATIONS = [
+            { key: 'taipei', name: '臺北市', apiName: '臺北市' },
+            { key: 'newtaipei', name: '新北市', apiName: '新北市' },
+            { key: 'taoyuan', name: '桃園市', apiName: '桃園市' },
+            { key: 'taichung', name: '臺中市', apiName: '臺中市' },
+            { key: 'tainan', name: '臺南市', apiName: '臺南市' },
+            { key: 'kaohsiung', name: '高雄市', apiName: '高雄市' },
+            { key: 'keelung', name: '基隆市', apiName: '基隆市' },
+            { key: 'hsinchu_city', name: '新竹市', apiName: '新竹市' },
+            { key: 'hsinchu_county', name: '新竹縣', apiName: '新竹縣' },
+            { key: 'miaoli', name: '苗栗縣', apiName: '苗栗縣' },
+            { key: 'changhua', name: '彰化縣', apiName: '彰化縣' },
+            { key: 'nantou', name: '南投縣', apiName: '南投縣' },
+            { key: 'yunlin', name: '雲林縣', apiName: '雲林縣' },
+            { key: 'chiayi_city', name: '嘉義市', apiName: '嘉義市' },
+            { key: 'chiayi_county', name: '嘉義縣', apiName: '嘉義縣' },
+            { key: 'pingtung', name: '屏東縣', apiName: '屏東縣' },
+            { key: 'yilan', name: '宜蘭縣', apiName: '宜蘭縣' },
+            { key: 'hualien', name: '花蓮縣', apiName: '花蓮縣' },
+            { key: 'taitung', name: '臺東縣', apiName: '臺東縣' },
+            { key: 'penghu', name: '澎湖縣', apiName: '澎湖縣' },
+            { key: 'kinmen', name: '金門縣', apiName: '金門縣' },
+            { key: 'lienchiang', name: '連江縣', apiName: '連江縣' }
+        ];
+
+        // 當前選擇的地點
+        let currentLocation = 'newtaipei';
+
+        // 獲取當前API URL
+        function getApiUrl() {
+            const location = LOCATIONS.find(loc => loc.key === currentLocation);
+            if (location) {
+                return `${API_BASE_URL}/${encodeURIComponent(location.apiName)}`;
+            }
+            return `${API_BASE_URL}/新北市`;
+        }
+
+        // 根據key獲取地點名稱
+        function getLocationName(key) {
+            const location = LOCATIONS.find(loc => loc.key === key);
+            return location ? location.name : '新北市';
+        }
 
         // 創建飄落的櫻花瓣
         function createSakuraPetals() {
@@ -572,9 +730,54 @@
             }
         }
 
-        // 頁面載入時創建櫻花瓣
+        // 地點選擇功能
+        function initLocationSelector() {
+            const locationPill = document.getElementById('locationPill');
+            const locationDropdown = document.getElementById('locationDropdown');
+            const locationOptions = document.querySelectorAll('.location-option');
+
+            // 點擊地點標籤顯示/隱藏下拉選單
+            locationPill.addEventListener('click', function(e) {
+                e.stopPropagation();
+                locationDropdown.classList.toggle('show');
+            });
+
+            // 點擊選項切換地點
+            locationOptions.forEach(option => {
+                option.addEventListener('click', function() {
+                    const location = this.dataset.location;
+                    const name = this.dataset.name;
+                    
+                    // 更新當前地點
+                    currentLocation = location;
+                    
+                    // 更新顯示
+                    locationPill.textContent = `📍 ${name}`;
+                    
+                    // 更新選中狀態
+                    locationOptions.forEach(opt => opt.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    // 隱藏下拉選單
+                    locationDropdown.classList.remove('show');
+                    
+                    // 重新載入天氣資料
+                    loadWeather();
+                });
+            });
+
+            // 點擊其他地方關閉下拉選單
+            document.addEventListener('click', function(e) {
+                if (!locationPill.contains(e.target) && !locationDropdown.contains(e.target)) {
+                    locationDropdown.classList.remove('show');
+                }
+            });
+        }
+
+        // 頁面載入時創建櫻花瓣和初始化地點選擇
         document.addEventListener("DOMContentLoaded", function() {
             createSakuraPetals();
+            initLocationSelector();
         });
 
         function getWeatherIcon(weather) {
@@ -687,16 +890,21 @@
             document.getElementById('updateTime').textContent = `${month}月${date}日 ${days[dayIndex]}`;
         }
 
-        async function fetchWeather() {
+        // 載入天氣資料
+        async function loadWeather() {
+            // 顯示載入畫面
+            document.getElementById('loading').style.display = 'flex';
+            document.getElementById('mainContent').style.display = 'none';
+
             try {
                 // 1. 定義「最低等待時間」：1500 毫秒 (1.5秒)
                 const delayPromise = new Promise(resolve => setTimeout(resolve, 1500));
 
                 // 2. 定義「抓取資料」的工作
-                const fetchPromise = fetch(API_URL).then(res => res.json());
+                const apiUrl = getApiUrl();
+                const fetchPromise = fetch(apiUrl).then(res => res.json());
 
                 // 3. Promise.all 會等待「兩個都完成」才會往下走
-                // result 陣列裡，第一個是 delay 的結果(沒用到)，第二個是 api 的 json 資料
                 const [_, json] = await Promise.all([delayPromise, fetchPromise]);
 
                 if (json.success) {
@@ -710,11 +918,17 @@
                 }
             } catch (e) {
                 console.error(e);
-                alert("天氣資料讀取失敗，狸克把網路線咬斷了！");
+                alert("天氣資料讀取失敗，請稍後再試！");
+                // 即使失敗也隱藏載入畫面
+                document.getElementById('loading').style.display = 'none';
+                document.getElementById('mainContent').style.display = 'block';
             }
         }
 
-        document.addEventListener("DOMContentLoaded", fetchWeather);
+        // 初始載入
+        document.addEventListener("DOMContentLoaded", function() {
+            loadWeather();
+        });
     </script>
 </body>
 
